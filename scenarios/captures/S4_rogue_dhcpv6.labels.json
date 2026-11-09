@@ -1,0 +1,17 @@
+{
+  "id": "S4",
+  "title": "A rogue DHCPv6 server on an 'IPv4-only' network",
+  "attack_type": "Rogue DHCPv6 server (DNS takeover)",
+  "attacker_mac": "08:00:27:00:00:66",
+  "affected_hosts": [
+    "08:00:27:00:00:20"
+  ],
+  "attack_frames": [
+    27,
+    29,
+    35,
+    37
+  ],
+  "frames": 38,
+  "duration_s": 79.0
+}

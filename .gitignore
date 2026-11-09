@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv
+.pytest_cache/
+
+# Visualizer
+visualizer/node_modules/
+visualizer/dist/
+
+# Submission bundle (generated)
+submission/

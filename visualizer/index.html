@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Invisible Middleman</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>The Invisible Middleman</h1>
+      <label>Scenario
+        <select id="scenario"></select>
+      </label>
+    </header>
+
+    <main>
+      <section id="left">
+        <div id="intro" class="panel"></div>
+        <svg id="diagram" viewBox="0 0 640 360" role="img" aria-label="Network diagram"></svg>
+        <div id="stepper" class="panel">
+          <button id="first" title="First frame">|&lt;</button>
+          <button id="prev" title="Previous frame (Left arrow)">&lt;</button>
+          <input id="slider" type="range" min="1" value="1" aria-label="Frame" />
+          <button id="next" title="Next frame (Right arrow)">&gt;</button>
+          <button id="last" title="Last frame">&gt;|</button>
+          <span id="position"></span>
+          <button id="next-step" title="Jump to the next guided checkpoint">Next checkpoint</button>
+          <button id="next-alert" title="Jump to the next frame with an alert">Next alert</button>
+        </div>
+        <div id="frames" class="panel"><table><thead><tr><th>#</th><th>Time</th><th>Protocol</th><th>Summary</th></tr></thead><tbody></tbody></table></div>
+      </section>
+
+      <section id="right">
+        <div id="guide" class="panel"></div>
+        <div id="detail" class="panel"></div>
+        <div id="cards" class="panel"></div>
+        <div id="defenses" class="panel"></div>
+        <div id="assessment" class="panel"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

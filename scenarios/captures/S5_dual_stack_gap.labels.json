@@ -1,0 +1,29 @@
+{
+  "id": "S5",
+  "title": "IPv4 defended, IPv6 wide open",
+  "attack_type": "ARP attempt (blocked) then rogue RA, NA spoofing and rogue DHCPv6",
+  "attacker_mac": "08:00:27:00:00:66",
+  "affected_hosts": [
+    "08:00:27:00:00:10",
+    "08:00:27:00:00:20"
+  ],
+  "default_defenses": [
+    "static_arp",
+    "dai"
+  ],
+  "attack_frames": [
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    47,
+    49,
+    52
+  ],
+  "frames": 52,
+  "duration_s": 45.5
+}

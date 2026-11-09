@@ -1,0 +1,10 @@
+{
+  "id": "S1",
+  "title": "A healthy dual-stack network",
+  "attack_type": "none",
+  "attacker_mac": null,
+  "affected_hosts": [],
+  "attack_frames": [],
+  "frames": 302,
+  "duration_s": 7209.9
+}

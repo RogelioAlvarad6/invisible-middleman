@@ -1,0 +1,1870 @@
+{
+ "schema": "invisible-middleman/timeline@1",
+ "router_mac": "08:00:27:00:00:01",
+ "hosts": [
+  {
+   "mac": "08:00:27:00:00:01",
+   "name": "router",
+   "role": "router",
+   "ip4": "192.168.56.1",
+   "ip6": [],
+   "final": {
+    "ip4": "192.168.56.1",
+    "ip6": [],
+    "gw4": null,
+    "gw4_mac": null,
+    "gw6": null,
+    "gw6_mac": null,
+    "dns4": null,
+    "dns6": null
+   }
+  },
+  {
+   "mac": "08:00:27:00:00:10",
+   "name": "ubuntu-client",
+   "role": "client",
+   "ip4": "192.168.56.10",
+   "ip6": [
+    "2001:db8:56::10",
+    "fe80::a00:27ff:fe00:10"
+   ],
+   "final": {
+    "ip4": "192.168.56.10",
+    "ip6": [
+     "2001:db8:56::10",
+     "fe80::a00:27ff:fe00:10"
+    ],
+    "gw4": "192.168.56.1",
+    "gw4_mac": "08:00:27:00:00:66",
+    "gw6": "fe80::a00:27ff:fe00:66",
+    "gw6_mac": "08:00:27:00:00:66",
+    "dns4": "192.168.56.1",
+    "dns6": "fe80::a00:27ff:fe00:66"
+   }
+  },
+  {
+   "mac": "08:00:27:00:00:20",
+   "name": "win11-client",
+   "role": "client",
+   "ip4": "192.168.56.20",
+   "ip6": [
+    "2001:db8:56::20",
+    "2001:db8:56::6:20",
+    "fe80::a00:27ff:fe00:20"
+   ],
+   "final": {
+    "ip4": "192.168.56.20",
+    "ip6": [
+     "2001:db8:56::20",
+     "2001:db8:56::6:20",
+     "fe80::a00:27ff:fe00:20"
+    ],
+    "gw4": "192.168.56.1",
+    "gw4_mac": "08:00:27:00:00:66",
+    "gw6": "fe80::a00:27ff:fe00:66",
+    "gw6_mac": "08:00:27:00:00:66",
+    "dns4": "192.168.56.1",
+    "dns6": "fe80::a00:27ff:fe00:66"
+   }
+  },
+  {
+   "mac": "08:00:27:00:00:66",
+   "name": "kali",
+   "role": "client",
+   "ip4": "192.168.56.66",
+   "ip6": [
+    "2001:db8:56::66",
+    "fe80::a00:27ff:fe00:66"
+   ],
+   "final": {
+    "ip4": "192.168.56.66",
+    "ip6": [
+     "2001:db8:56::66",
+     "fe80::a00:27ff:fe00:66"
+    ],
+    "gw4": "192.168.56.1",
+    "gw4_mac": "08:00:27:00:00:01",
+    "gw6": "fe80::a00:27ff:fe00:1",
+    "gw6_mac": "08:00:27:00:00:01",
+    "dns4": "192.168.56.1",
+    "dns6": "fe80::a00:27ff:fe00:1"
+   }
+  }
+ ],
+ "frames": [
+  {
+   "i": 1,
+   "t": 1793750400.0,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "Who has 192.168.56.1? Tell 192.168.56.1",
+   "op": "request",
+   "hwsrc": "08:00:27:00:00:01",
+   "psrc": "192.168.56.1",
+   "hwdst": "00:00:00:00:00:00",
+   "pdst": "192.168.56.1",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 0.0
+  },
+  {
+   "i": 2,
+   "t": 1793750401.0,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP DISCOVER from 08:00:27:00:00:10",
+   "msg": "discover",
+   "chaddr": "08:00:27:00:00:10",
+   "yiaddr": "0.0.0.0",
+   "src_ip": "0.0.0.0",
+   "server_id": null,
+   "router": [],
+   "dns": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 1.0
+  },
+  {
+   "i": 3,
+   "t": 1793750401.003,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP OFFER 192.168.56.10 to 08:00:27:00:00:10, router 192.168.56.1, DNS 192.168.56.1",
+   "msg": "offer",
+   "chaddr": "08:00:27:00:00:10",
+   "yiaddr": "192.168.56.10",
+   "src_ip": "192.168.56.1",
+   "server_id": "192.168.56.1",
+   "router": [
+    "192.168.56.1"
+   ],
+   "dns": [
+    "192.168.56.1"
+   ],
+   "is_server_msg": true,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 1.003
+  },
+  {
+   "i": 4,
+   "t": 1793750401.013,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP REQUEST from 08:00:27:00:00:10",
+   "msg": "request",
+   "chaddr": "08:00:27:00:00:10",
+   "yiaddr": "0.0.0.0",
+   "src_ip": "0.0.0.0",
+   "server_id": "192.168.56.1",
+   "router": [],
+   "dns": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 1.013
+  },
+  {
+   "i": 5,
+   "t": 1793750401.016,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP ACK 192.168.56.10 to 08:00:27:00:00:10, router 192.168.56.1, DNS 192.168.56.1",
+   "msg": "ack",
+   "chaddr": "08:00:27:00:00:10",
+   "yiaddr": "192.168.56.10",
+   "src_ip": "192.168.56.1",
+   "server_id": "192.168.56.1",
+   "router": [
+    "192.168.56.1"
+   ],
+   "dns": [
+    "192.168.56.1"
+   ],
+   "is_server_msg": true,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "ip4",
+     "key": null,
+     "value": "192.168.56.10",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "gw4",
+     "key": null,
+     "value": "192.168.56.1",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "dns4",
+     "key": null,
+     "value": "192.168.56.1",
+     "prev": null
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 1.016
+  },
+  {
+   "i": 6,
+   "t": 1793750401.066,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "Who has 192.168.56.1? Tell 192.168.56.10",
+   "op": "request",
+   "hwsrc": "08:00:27:00:00:10",
+   "psrc": "192.168.56.10",
+   "hwdst": "00:00:00:00:00:00",
+   "pdst": "192.168.56.1",
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:01",
+     "kind": "arp",
+     "key": "192.168.56.10",
+     "value": "08:00:27:00:00:10",
+     "prev": null,
+     "static_arp_blocks": false
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 1.066
+  },
+  {
+   "i": 7,
+   "t": 1793750401.068,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "08:00:27:00:00:10",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:01",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:01",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:10",
+   "pdst": "192.168.56.10",
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:01",
+     "prev": null,
+     "static_arp_blocks": false
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 1.068
+  },
+  {
+   "i": 8,
+   "t": 1793750401.168,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "33:33:ff:00:00:10",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Duplicate Address Detection for fe80::a00:27ff:fe00:10",
+   "src_ip": "::",
+   "target": "fe80::a00:27ff:fe00:10",
+   "sllao": null,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 1.168
+  },
+  {
+   "i": 9,
+   "t": 1793750402.168,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP DISCOVER from 08:00:27:00:00:20",
+   "msg": "discover",
+   "chaddr": "08:00:27:00:00:20",
+   "yiaddr": "0.0.0.0",
+   "src_ip": "0.0.0.0",
+   "server_id": null,
+   "router": [],
+   "dns": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 2.168
+  },
+  {
+   "i": 10,
+   "t": 1793750402.171,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP OFFER 192.168.56.20 to 08:00:27:00:00:20, router 192.168.56.1, DNS 192.168.56.1",
+   "msg": "offer",
+   "chaddr": "08:00:27:00:00:20",
+   "yiaddr": "192.168.56.20",
+   "src_ip": "192.168.56.1",
+   "server_id": "192.168.56.1",
+   "router": [
+    "192.168.56.1"
+   ],
+   "dns": [
+    "192.168.56.1"
+   ],
+   "is_server_msg": true,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 2.171
+  },
+  {
+   "i": 11,
+   "t": 1793750402.181,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP REQUEST from 08:00:27:00:00:20",
+   "msg": "request",
+   "chaddr": "08:00:27:00:00:20",
+   "yiaddr": "0.0.0.0",
+   "src_ip": "0.0.0.0",
+   "server_id": "192.168.56.1",
+   "router": [],
+   "dns": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 2.181
+  },
+  {
+   "i": 12,
+   "t": 1793750402.184,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP ACK 192.168.56.20 to 08:00:27:00:00:20, router 192.168.56.1, DNS 192.168.56.1",
+   "msg": "ack",
+   "chaddr": "08:00:27:00:00:20",
+   "yiaddr": "192.168.56.20",
+   "src_ip": "192.168.56.1",
+   "server_id": "192.168.56.1",
+   "router": [
+    "192.168.56.1"
+   ],
+   "dns": [
+    "192.168.56.1"
+   ],
+   "is_server_msg": true,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "ip4",
+     "key": null,
+     "value": "192.168.56.20",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "gw4",
+     "key": null,
+     "value": "192.168.56.1",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "dns4",
+     "key": null,
+     "value": "192.168.56.1",
+     "prev": null
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 2.184
+  },
+  {
+   "i": 13,
+   "t": 1793750402.234,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "Who has 192.168.56.1? Tell 192.168.56.20",
+   "op": "request",
+   "hwsrc": "08:00:27:00:00:20",
+   "psrc": "192.168.56.20",
+   "hwdst": "00:00:00:00:00:00",
+   "pdst": "192.168.56.1",
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:01",
+     "kind": "arp",
+     "key": "192.168.56.20",
+     "value": "08:00:27:00:00:20",
+     "prev": null,
+     "static_arp_blocks": false
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 2.234
+  },
+  {
+   "i": 14,
+   "t": 1793750402.236,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:01",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:01",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:20",
+   "pdst": "192.168.56.20",
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:01",
+     "prev": null,
+     "static_arp_blocks": false
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 2.236
+  },
+  {
+   "i": 15,
+   "t": 1793750402.336,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "33:33:ff:00:00:20",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Duplicate Address Detection for fe80::a00:27ff:fe00:20",
+   "src_ip": "::",
+   "target": "fe80::a00:27ff:fe00:20",
+   "sllao": null,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 2.336
+  },
+  {
+   "i": 16,
+   "t": 1793750403.336,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP DISCOVER from 08:00:27:00:00:66",
+   "msg": "discover",
+   "chaddr": "08:00:27:00:00:66",
+   "yiaddr": "0.0.0.0",
+   "src_ip": "0.0.0.0",
+   "server_id": null,
+   "router": [],
+   "dns": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 3.336
+  },
+  {
+   "i": 17,
+   "t": 1793750403.339,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP OFFER 192.168.56.66 to 08:00:27:00:00:66, router 192.168.56.1, DNS 192.168.56.1",
+   "msg": "offer",
+   "chaddr": "08:00:27:00:00:66",
+   "yiaddr": "192.168.56.66",
+   "src_ip": "192.168.56.1",
+   "server_id": "192.168.56.1",
+   "router": [
+    "192.168.56.1"
+   ],
+   "dns": [
+    "192.168.56.1"
+   ],
+   "is_server_msg": true,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 3.339
+  },
+  {
+   "i": 18,
+   "t": 1793750403.349,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP REQUEST from 08:00:27:00:00:66",
+   "msg": "request",
+   "chaddr": "08:00:27:00:00:66",
+   "yiaddr": "0.0.0.0",
+   "src_ip": "0.0.0.0",
+   "server_id": "192.168.56.1",
+   "router": [],
+   "dns": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 3.349
+  },
+  {
+   "i": 19,
+   "t": 1793750403.352,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "dhcp",
+   "proto": "DHCP",
+   "summary": "DHCP ACK 192.168.56.66 to 08:00:27:00:00:66, router 192.168.56.1, DNS 192.168.56.1",
+   "msg": "ack",
+   "chaddr": "08:00:27:00:00:66",
+   "yiaddr": "192.168.56.66",
+   "src_ip": "192.168.56.1",
+   "server_id": "192.168.56.1",
+   "router": [
+    "192.168.56.1"
+   ],
+   "dns": [
+    "192.168.56.1"
+   ],
+   "is_server_msg": true,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "ip4",
+     "key": null,
+     "value": "192.168.56.66",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "gw4",
+     "key": null,
+     "value": "192.168.56.1",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "dns4",
+     "key": null,
+     "value": "192.168.56.1",
+     "prev": null
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 3.352
+  },
+  {
+   "i": 20,
+   "t": 1793750403.402,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "ff:ff:ff:ff:ff:ff",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "Who has 192.168.56.1? Tell 192.168.56.66",
+   "op": "request",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.66",
+   "hwdst": "00:00:00:00:00:00",
+   "pdst": "192.168.56.1",
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:01",
+     "kind": "arp",
+     "key": "192.168.56.66",
+     "value": "08:00:27:00:00:66",
+     "prev": null,
+     "static_arp_blocks": false
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 3.402
+  },
+  {
+   "i": 21,
+   "t": 1793750403.404,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "08:00:27:00:00:66",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:01",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:01",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:66",
+   "pdst": "192.168.56.66",
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:01",
+     "prev": null,
+     "static_arp_blocks": false
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 3.404
+  },
+  {
+   "i": 22,
+   "t": 1793750403.504,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "33:33:ff:00:00:66",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Duplicate Address Detection for fe80::a00:27ff:fe00:66",
+   "src_ip": "::",
+   "target": "fe80::a00:27ff:fe00:66",
+   "sllao": null,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 3.504
+  },
+  {
+   "i": 23,
+   "t": 1793750404.004,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "33:33:00:00:00:01",
+   "kind": "ra",
+   "proto": "ICMPv6 RA",
+   "summary": "Router Advertisement from fe80::a00:27ff:fe00:1 (lifetime 1800s, preference medium, DNS fe80::a00:27ff:fe00:1)",
+   "src_ip": "fe80::a00:27ff:fe00:1",
+   "lifetime": 1800,
+   "prf": 0,
+   "sllao": "08:00:27:00:00:01",
+   "rdnss": [
+    "fe80::a00:27ff:fe00:1"
+   ],
+   "managed": false,
+   "other": false,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:01",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": {
+      "pref": 0,
+      "order": 1
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:1",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:01",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": {
+      "pref": 0,
+      "order": 2
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:1",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:01",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": {
+      "pref": 0,
+      "order": 3
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:1",
+     "prev": null
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 4.004
+  },
+  {
+   "i": 24,
+   "t": 1793750404.054,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "33:33:ff:00:00:10",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Duplicate Address Detection for 2001:db8:56::10",
+   "src_ip": "::",
+   "target": "2001:db8:56::10",
+   "sllao": null,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 4.054
+  },
+  {
+   "i": 25,
+   "t": 1793750404.104,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "33:33:ff:00:00:20",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Duplicate Address Detection for 2001:db8:56::20",
+   "src_ip": "::",
+   "target": "2001:db8:56::20",
+   "sllao": null,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 4.104
+  },
+  {
+   "i": 26,
+   "t": 1793750404.154,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "33:33:ff:00:00:66",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Duplicate Address Detection for 2001:db8:56::66",
+   "src_ip": "::",
+   "target": "2001:db8:56::66",
+   "sllao": null,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 4.154
+  },
+  {
+   "i": 27,
+   "t": 1793750404.454,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "33:33:ff:00:00:01",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Who has fe80::a00:27ff:fe00:1? (from fe80::a00:27ff:fe00:10)",
+   "src_ip": "fe80::a00:27ff:fe00:10",
+   "target": "fe80::a00:27ff:fe00:1",
+   "sllao": "08:00:27:00:00:10",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 4.454
+  },
+  {
+   "i": 28,
+   "t": 1793750404.456,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "08:00:27:00:00:10",
+   "kind": "na",
+   "proto": "ICMPv6 NA",
+   "summary": "fe80::a00:27ff:fe00:1 is at 08:00:27:00:00:01 (flags RSO)",
+   "src_ip": "fe80::a00:27ff:fe00:1",
+   "dst_ip": "fe80::a00:27ff:fe00:10",
+   "target": "fe80::a00:27ff:fe00:1",
+   "tlla": "08:00:27:00:00:01",
+   "R": true,
+   "S": true,
+   "O": true,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:01",
+     "prev": "08:00:27:00:00:01"
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 4.456
+  },
+  {
+   "i": 29,
+   "t": 1793750404.756,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "33:33:ff:00:00:01",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Who has fe80::a00:27ff:fe00:1? (from fe80::a00:27ff:fe00:20)",
+   "src_ip": "fe80::a00:27ff:fe00:20",
+   "target": "fe80::a00:27ff:fe00:1",
+   "sllao": "08:00:27:00:00:20",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 4.756
+  },
+  {
+   "i": 30,
+   "t": 1793750404.758,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "na",
+   "proto": "ICMPv6 NA",
+   "summary": "fe80::a00:27ff:fe00:1 is at 08:00:27:00:00:01 (flags RSO)",
+   "src_ip": "fe80::a00:27ff:fe00:1",
+   "dst_ip": "fe80::a00:27ff:fe00:20",
+   "target": "fe80::a00:27ff:fe00:1",
+   "tlla": "08:00:27:00:00:01",
+   "R": true,
+   "S": true,
+   "O": true,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:01",
+     "prev": "08:00:27:00:00:01"
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 4.758
+  },
+  {
+   "i": 31,
+   "t": 1793750405.058,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "33:33:ff:00:00:01",
+   "kind": "ns",
+   "proto": "ICMPv6 NS",
+   "summary": "Who has fe80::a00:27ff:fe00:1? (from fe80::a00:27ff:fe00:66)",
+   "src_ip": "fe80::a00:27ff:fe00:66",
+   "target": "fe80::a00:27ff:fe00:1",
+   "sllao": "08:00:27:00:00:66",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 5.058
+  },
+  {
+   "i": 32,
+   "t": 1793750405.06,
+   "src_mac": "08:00:27:00:00:01",
+   "dst_mac": "08:00:27:00:00:66",
+   "kind": "na",
+   "proto": "ICMPv6 NA",
+   "summary": "fe80::a00:27ff:fe00:1 is at 08:00:27:00:00:01 (flags RSO)",
+   "src_ip": "fe80::a00:27ff:fe00:1",
+   "dst_ip": "fe80::a00:27ff:fe00:66",
+   "target": "fe80::a00:27ff:fe00:1",
+   "tlla": "08:00:27:00:00:01",
+   "R": true,
+   "S": true,
+   "O": true,
+   "alerts": [],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:66",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:01",
+     "prev": "08:00:27:00:00:01"
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 5.06
+  },
+  {
+   "i": 33,
+   "t": 1793750410.06,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "08:00:27:00:00:01",
+   "kind": "data",
+   "proto": "IPv4",
+   "summary": "DNS query 192.168.56.10 -> 192.168.56.1 (iastate.edu)",
+   "src_ip": "192.168.56.10",
+   "dst_ip": "192.168.56.1",
+   "app": "DNS query",
+   "qname": "iastate.edu",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:01",
+   "next_hop_role": "router",
+   "rel_t": 10.06
+  },
+  {
+   "i": 34,
+   "t": 1793750410.26,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "08:00:27:00:00:01",
+   "kind": "data",
+   "proto": "IPv4",
+   "summary": "ICMP 192.168.56.10 -> 1.1.1.1",
+   "src_ip": "192.168.56.10",
+   "dst_ip": "1.1.1.1",
+   "app": "ICMP",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:01",
+   "next_hop_role": "router",
+   "rel_t": 10.26
+  },
+  {
+   "i": 35,
+   "t": 1793750410.76,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "08:00:27:00:00:01",
+   "kind": "data",
+   "proto": "IPv6",
+   "summary": "DNS query fe80::a00:27ff:fe00:20 -> fe80::a00:27ff:fe00:1 (canvas.iastate.edu)",
+   "src_ip": "fe80::a00:27ff:fe00:20",
+   "dst_ip": "fe80::a00:27ff:fe00:1",
+   "app": "DNS query",
+   "qname": "canvas.iastate.edu",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:01",
+   "next_hop_role": "router",
+   "rel_t": 10.76
+  },
+  {
+   "i": 36,
+   "t": 1793750410.96,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "08:00:27:00:00:01",
+   "kind": "data",
+   "proto": "IPv6",
+   "summary": "IP 2001:db8:56::20 -> 2606:4700:4700::1111",
+   "src_ip": "2001:db8:56::20",
+   "dst_ip": "2606:4700:4700::1111",
+   "app": "IP",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:01",
+   "next_hop_role": "router",
+   "rel_t": 10.96
+  },
+  {
+   "i": 37,
+   "t": 1793750418.96,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:10",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:66",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:10",
+   "pdst": "192.168.56.10",
+   "alerts": [
+    {
+     "rule": "ARP-01",
+     "frame": 37,
+     "t": 1793750418.96,
+     "severity": "high",
+     "title": "ARP claim contradicts a trusted IPv4 binding",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender hardware address (hwsrc)",
+     "explain": "Frame 37 says 192.168.56.1 is at kali (08:00:27:00:00:66), but the sensor already knows 192.168.56.1 belongs to router (08:00:27:00:00:01) (learned from DHCP server identifier, frame 19). ARP has no authentication, and RFC 826 tells every host that already has 192.168.56.1 cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic. Nobody asked for this reply (unsolicited)."
+    },
+    {
+     "rule": "ARP-02",
+     "frame": 37,
+     "t": 1793750418.96,
+     "severity": "medium",
+     "title": "One MAC address claims several IPv4 addresses",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender protocol address (psrc)",
+     "explain": "kali (08:00:27:00:00:66) has now claimed 2 different IPv4 addresses (192.168.56.1, 192.168.56.66). A normal client owns one address on a LAN. An attacker sitting in the middle claims the gateway and the victim at the same time."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 37,
+     "t": 1793750418.96,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 37, ubuntu-client's IPv4 gateway resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 37,
+     "t": 1793750418.96,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 37, ubuntu-client's IPv4 DNS server resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:01",
+     "static_arp_blocks": true
+    }
+   ],
+   "blocked_by": [
+    "dai"
+   ],
+   "rel_t": 18.96
+  },
+  {
+   "i": 38,
+   "t": 1793750418.961,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:66",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:20",
+   "pdst": "192.168.56.20",
+   "alerts": [
+    {
+     "rule": "ARP-01",
+     "frame": 38,
+     "t": 1793750418.961,
+     "severity": "high",
+     "title": "ARP claim contradicts a trusted IPv4 binding",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender hardware address (hwsrc)",
+     "explain": "Frame 38 says 192.168.56.1 is at kali (08:00:27:00:00:66), but the sensor already knows 192.168.56.1 belongs to router (08:00:27:00:00:01) (learned from DHCP server identifier, frame 19). ARP has no authentication, and RFC 826 tells every host that already has 192.168.56.1 cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic. Nobody asked for this reply (unsolicited)."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 38,
+     "t": 1793750418.961,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 38, win11-client's IPv4 gateway resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 38,
+     "t": 1793750418.961,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 38, win11-client's IPv4 DNS server resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:01",
+     "static_arp_blocks": true
+    }
+   ],
+   "blocked_by": [
+    "dai"
+   ],
+   "rel_t": 18.961
+  },
+  {
+   "i": 39,
+   "t": 1793750420.96,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:10",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:66",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:10",
+   "pdst": "192.168.56.10",
+   "alerts": [
+    {
+     "rule": "ARP-01",
+     "frame": 39,
+     "t": 1793750420.96,
+     "severity": "high",
+     "title": "ARP claim contradicts a trusted IPv4 binding",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender hardware address (hwsrc)",
+     "explain": "Frame 39 says 192.168.56.1 is at kali (08:00:27:00:00:66), but the sensor already knows 192.168.56.1 belongs to router (08:00:27:00:00:01) (learned from DHCP server identifier, frame 19). ARP has no authentication, and RFC 826 tells every host that already has 192.168.56.1 cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic. Nobody asked for this reply (unsolicited)."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:66",
+     "static_arp_blocks": true
+    }
+   ],
+   "blocked_by": [
+    "dai"
+   ],
+   "rel_t": 20.96
+  },
+  {
+   "i": 40,
+   "t": 1793750420.961,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:66",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:20",
+   "pdst": "192.168.56.20",
+   "alerts": [
+    {
+     "rule": "ARP-01",
+     "frame": 40,
+     "t": 1793750420.961,
+     "severity": "high",
+     "title": "ARP claim contradicts a trusted IPv4 binding",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender hardware address (hwsrc)",
+     "explain": "Frame 40 says 192.168.56.1 is at kali (08:00:27:00:00:66), but the sensor already knows 192.168.56.1 belongs to router (08:00:27:00:00:01) (learned from DHCP server identifier, frame 19). ARP has no authentication, and RFC 826 tells every host that already has 192.168.56.1 cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic. Nobody asked for this reply (unsolicited)."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:66",
+     "static_arp_blocks": true
+    }
+   ],
+   "blocked_by": [
+    "dai"
+   ],
+   "rel_t": 20.961
+  },
+  {
+   "i": 41,
+   "t": 1793750422.96,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:10",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:66",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:10",
+   "pdst": "192.168.56.10",
+   "alerts": [
+    {
+     "rule": "ARP-01",
+     "frame": 41,
+     "t": 1793750422.96,
+     "severity": "high",
+     "title": "ARP claim contradicts a trusted IPv4 binding",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender hardware address (hwsrc)",
+     "explain": "Frame 41 says 192.168.56.1 is at kali (08:00:27:00:00:66), but the sensor already knows 192.168.56.1 belongs to router (08:00:27:00:00:01) (learned from DHCP server identifier, frame 19). ARP has no authentication, and RFC 826 tells every host that already has 192.168.56.1 cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic. Nobody asked for this reply (unsolicited)."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:66",
+     "static_arp_blocks": true
+    }
+   ],
+   "blocked_by": [
+    "dai"
+   ],
+   "rel_t": 22.96
+  },
+  {
+   "i": 42,
+   "t": 1793750422.961,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "arp",
+   "proto": "ARP",
+   "summary": "192.168.56.1 is at 08:00:27:00:00:66",
+   "op": "reply",
+   "hwsrc": "08:00:27:00:00:66",
+   "psrc": "192.168.56.1",
+   "hwdst": "08:00:27:00:00:20",
+   "pdst": "192.168.56.20",
+   "alerts": [
+    {
+     "rule": "ARP-01",
+     "frame": 42,
+     "t": 1793750422.961,
+     "severity": "high",
+     "title": "ARP claim contradicts a trusted IPv4 binding",
+     "protocol": "ARP",
+     "mitre": "T1557.002",
+     "field": "ARP sender hardware address (hwsrc)",
+     "explain": "Frame 42 says 192.168.56.1 is at kali (08:00:27:00:00:66), but the sensor already knows 192.168.56.1 belongs to router (08:00:27:00:00:01) (learned from DHCP server identifier, frame 19). ARP has no authentication, and RFC 826 tells every host that already has 192.168.56.1 cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic. Nobody asked for this reply (unsolicited)."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "arp",
+     "key": "192.168.56.1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:66",
+     "static_arp_blocks": true
+    }
+   ],
+   "blocked_by": [
+    "dai"
+   ],
+   "rel_t": 22.961
+  },
+  {
+   "i": 43,
+   "t": 1793750423.961,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "08:00:27:00:00:01",
+   "kind": "data",
+   "proto": "IPv4",
+   "summary": "ICMP 192.168.56.10 -> 1.1.1.1",
+   "src_ip": "192.168.56.10",
+   "dst_ip": "1.1.1.1",
+   "app": "ICMP",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:01",
+   "next_hop_role": "router",
+   "rel_t": 23.961
+  },
+  {
+   "i": 44,
+   "t": 1793750428.961,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "33:33:00:00:00:01",
+   "kind": "na",
+   "proto": "ICMPv6 NA",
+   "summary": "fe80::a00:27ff:fe00:1 is at 08:00:27:00:00:66 (flags RO)",
+   "src_ip": "fe80::a00:27ff:fe00:1",
+   "dst_ip": "ff02::1",
+   "target": "fe80::a00:27ff:fe00:1",
+   "tlla": "08:00:27:00:00:66",
+   "R": true,
+   "S": false,
+   "O": true,
+   "alerts": [
+    {
+     "rule": "ND-01",
+     "frame": 44,
+     "t": 1793750428.961,
+     "severity": "high",
+     "title": "Neighbor Advertisement contradicts a trusted IPv6 binding",
+     "protocol": "NDP",
+     "mitre": "T1557",
+     "field": "NA Target Link-Layer Address option",
+     "explain": "Frame 44 says fe80::a00:27ff:fe00:1 is at kali (08:00:27:00:00:66), but the sensor learned fe80::a00:27ff:fe00:1 belongs to router (08:00:27:00:00:01) (from RA from the trusted router, frame 23). The Override flag is set. RFC 4861 tells a host to replace its cached link-layer address when O=1, which is the IPv6 version of ARP poisoning (RFC 3756, section 4.1.1)."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 44,
+     "t": 1793750428.961,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 44, ubuntu-client's IPv6 default router resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 44,
+     "t": 1793750428.961,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 44, ubuntu-client's IPv6 DNS server resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 44,
+     "t": 1793750428.961,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 44, win11-client's IPv6 default router resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    },
+    {
+     "rule": "XP-01",
+     "frame": 44,
+     "t": 1793750428.961,
+     "severity": "high",
+     "title": "A host now trusts the attacker",
+     "protocol": "Cross-protocol",
+     "mitre": "T1557",
+     "field": "Host trust card",
+     "explain": "After frame 44, win11-client's IPv6 DNS server resolves to kali (08:00:27:00:00:66) instead of the real router, router (08:00:27:00:00:01). Its traffic for that role now goes through another machine."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:01"
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:1",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:01"
+    }
+   ],
+   "blocked_by": [],
+   "rel_t": 28.961
+  },
+  {
+   "i": 45,
+   "t": 1793750430.961,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "33:33:00:00:00:01",
+   "kind": "ra",
+   "proto": "ICMPv6 RA",
+   "summary": "Router Advertisement from fe80::a00:27ff:fe00:66 (lifetime 1800s, preference high, DNS fe80::a00:27ff:fe00:66)",
+   "src_ip": "fe80::a00:27ff:fe00:66",
+   "lifetime": 1800,
+   "prf": 1,
+   "sllao": "08:00:27:00:00:66",
+   "rdnss": [
+    "fe80::a00:27ff:fe00:66"
+   ],
+   "managed": false,
+   "other": false,
+   "alerts": [
+    {
+     "rule": "RA-01",
+     "frame": 45,
+     "t": 1793750430.961,
+     "severity": "high",
+     "title": "Router Advertisement from an untrusted device",
+     "protocol": "RA",
+     "mitre": "T1557",
+     "field": "Ethernet source / RA Source Link-Layer Address option",
+     "explain": "kali (08:00:27:00:00:66) is announcing itself as an IPv6 router (lifetime 1800s, preference high). Only router (08:00:27:00:00:01) is the real router. Any host can send an RA and every host that hears it adds the sender to its default-router list (RFC 3756, section 4.2.1). With a higher preference it wins outright."
+    },
+    {
+     "rule": "RA-02",
+     "frame": 45,
+     "t": 1793750430.961,
+     "severity": "high",
+     "title": "Router Advertisement hands out an untrusted DNS server",
+     "protocol": "RA",
+     "mitre": "T1557",
+     "field": "RA RDNSS option",
+     "explain": "The RA in frame 45 carries an RDNSS option naming fe80::a00:27ff:fe00:66 as the DNS server. Hosts that accept RDNSS (RFC 8106) will send name lookups there, so the attacker can answer with any address it likes."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": "08:00:27:00:00:66",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": {
+      "pref": 1,
+      "order": 4
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:66",
+     "prev": "fe80::a00:27ff:fe00:1"
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": "08:00:27:00:00:66",
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": {
+      "pref": 1,
+      "order": 5
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:66",
+     "prev": "fe80::a00:27ff:fe00:1"
+    }
+   ],
+   "blocked_by": [
+    "ra_guard"
+   ],
+   "rel_t": 30.961
+  },
+  {
+   "i": 46,
+   "t": 1793750433.961,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "33:33:00:01:00:02",
+   "kind": "dhcp6",
+   "proto": "DHCPv6",
+   "summary": "DHCPv6 SOLICIT from fe80::a00:27ff:fe00:20",
+   "msg": "solicit",
+   "src_ip": "fe80::a00:27ff:fe00:20",
+   "dst_ip": "ff02::1:2",
+   "dns": [],
+   "addrs": [],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 33.961
+  },
+  {
+   "i": 47,
+   "t": 1793750433.967,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "dhcp6",
+   "proto": "DHCPv6",
+   "summary": "DHCPv6 ADVERTISE from fe80::a00:27ff:fe00:66, DNS fe80::a00:27ff:fe00:66",
+   "msg": "advertise",
+   "src_ip": "fe80::a00:27ff:fe00:66",
+   "dst_ip": "fe80::a00:27ff:fe00:20",
+   "dns": [
+    "fe80::a00:27ff:fe00:66"
+   ],
+   "addrs": [
+    "2001:db8:56::6:20"
+   ],
+   "is_server_msg": true,
+   "alerts": [
+    {
+     "rule": "D6-01",
+     "frame": 47,
+     "t": 1793750433.967,
+     "severity": "high",
+     "title": "DHCPv6 server reply from an untrusted device",
+     "protocol": "DHCPv6",
+     "mitre": "T1557.003",
+     "field": "DHCPv6 option 23 (DNS recursive name server)",
+     "explain": "kali (08:00:27:00:00:66) sent a DHCPv6 ADVERTISE naming fe80::a00:27ff:fe00:66 as the DNS server. Only router (08:00:27:00:00:01) is trusted to answer. DHCPv6 replies are not authenticated, so whoever answers a Solicit first can set the client's IPv6 DNS server."
+    }
+   ],
+   "effects": [],
+   "blocked_by": [
+    "dhcpv6_guard"
+   ],
+   "rel_t": 33.967
+  },
+  {
+   "i": 48,
+   "t": 1793750433.977,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "33:33:00:01:00:02",
+   "kind": "dhcp6",
+   "proto": "DHCPv6",
+   "summary": "DHCPv6 REQUEST from fe80::a00:27ff:fe00:20",
+   "msg": "request",
+   "src_ip": "fe80::a00:27ff:fe00:20",
+   "dst_ip": "ff02::1:2",
+   "dns": [],
+   "addrs": [
+    "2001:db8:56::6:20"
+   ],
+   "is_server_msg": false,
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "rel_t": 33.977
+  },
+  {
+   "i": 49,
+   "t": 1793750433.983,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "08:00:27:00:00:20",
+   "kind": "dhcp6",
+   "proto": "DHCPv6",
+   "summary": "DHCPv6 REPLY from fe80::a00:27ff:fe00:66, DNS fe80::a00:27ff:fe00:66",
+   "msg": "reply",
+   "src_ip": "fe80::a00:27ff:fe00:66",
+   "dst_ip": "fe80::a00:27ff:fe00:20",
+   "dns": [
+    "fe80::a00:27ff:fe00:66"
+   ],
+   "addrs": [
+    "2001:db8:56::6:20"
+   ],
+   "is_server_msg": true,
+   "alerts": [
+    {
+     "rule": "D6-01",
+     "frame": 49,
+     "t": 1793750433.983,
+     "severity": "high",
+     "title": "DHCPv6 server reply from an untrusted device",
+     "protocol": "DHCPv6",
+     "mitre": "T1557.003",
+     "field": "DHCPv6 option 23 (DNS recursive name server)",
+     "explain": "kali (08:00:27:00:00:66) sent a DHCPv6 REPLY naming fe80::a00:27ff:fe00:66 as the DNS server. Only router (08:00:27:00:00:01) is trusted to answer. DHCPv6 replies are not authenticated, so whoever answers a Solicit first can set the client's IPv6 DNS server."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:66",
+     "prev": "fe80::a00:27ff:fe00:66"
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "ip6",
+     "key": "2001:db8:56::6:20",
+     "value": "2001:db8:56::6:20",
+     "prev": null
+    }
+   ],
+   "blocked_by": [
+    "dhcpv6_guard"
+   ],
+   "rel_t": 33.983
+  },
+  {
+   "i": 50,
+   "t": 1793750434.983,
+   "src_mac": "08:00:27:00:00:10",
+   "dst_mac": "08:00:27:00:00:66",
+   "kind": "data",
+   "proto": "IPv6",
+   "summary": "IP 2001:db8:56::10 -> 2606:4700:4700::1111",
+   "src_ip": "2001:db8:56::10",
+   "dst_ip": "2606:4700:4700::1111",
+   "app": "IP",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:66",
+   "next_hop_role": "client",
+   "rel_t": 34.983
+  },
+  {
+   "i": 51,
+   "t": 1793750435.483,
+   "src_mac": "08:00:27:00:00:20",
+   "dst_mac": "08:00:27:00:00:66",
+   "kind": "data",
+   "proto": "IPv6",
+   "summary": "DNS query fe80::a00:27ff:fe00:20 -> fe80::a00:27ff:fe00:66 (canvas.iastate.edu)",
+   "src_ip": "fe80::a00:27ff:fe00:20",
+   "dst_ip": "fe80::a00:27ff:fe00:66",
+   "app": "DNS query",
+   "qname": "canvas.iastate.edu",
+   "alerts": [],
+   "effects": [],
+   "blocked_by": [],
+   "next_hop": "08:00:27:00:00:66",
+   "next_hop_role": "client",
+   "rel_t": 35.483
+  },
+  {
+   "i": 52,
+   "t": 1793750445.483,
+   "src_mac": "08:00:27:00:00:66",
+   "dst_mac": "33:33:00:00:00:01",
+   "kind": "ra",
+   "proto": "ICMPv6 RA",
+   "summary": "Router Advertisement from fe80::a00:27ff:fe00:66 (lifetime 1800s, preference high, DNS fe80::a00:27ff:fe00:66)",
+   "src_ip": "fe80::a00:27ff:fe00:66",
+   "lifetime": 1800,
+   "prf": 1,
+   "sllao": "08:00:27:00:00:66",
+   "rdnss": [
+    "fe80::a00:27ff:fe00:66"
+   ],
+   "managed": false,
+   "other": false,
+   "alerts": [
+    {
+     "rule": "RA-01",
+     "frame": 52,
+     "t": 1793750445.483,
+     "severity": "high",
+     "title": "Router Advertisement from an untrusted device",
+     "protocol": "RA",
+     "mitre": "T1557",
+     "field": "Ethernet source / RA Source Link-Layer Address option",
+     "explain": "kali (08:00:27:00:00:66) is announcing itself as an IPv6 router (lifetime 1800s, preference high). Only router (08:00:27:00:00:01) is the real router. Any host can send an RA and every host that hears it adds the sender to its default-router list (RFC 3756, section 4.2.1). With a higher preference it wins outright."
+    },
+    {
+     "rule": "RA-02",
+     "frame": 52,
+     "t": 1793750445.483,
+     "severity": "high",
+     "title": "Router Advertisement hands out an untrusted DNS server",
+     "protocol": "RA",
+     "mitre": "T1557",
+     "field": "RA RDNSS option",
+     "explain": "The RA in frame 52 carries an RDNSS option naming fe80::a00:27ff:fe00:66 as the DNS server. Hosts that accept RDNSS (RFC 8106) will send name lookups there, so the attacker can answer with any address it likes."
+    }
+   ],
+   "effects": [
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:66"
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": {
+      "pref": 1,
+      "order": 4
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:10",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:66",
+     "prev": "fe80::a00:27ff:fe00:66"
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "nd",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": "08:00:27:00:00:66",
+     "prev": "08:00:27:00:00:66"
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "router6",
+     "key": "fe80::a00:27ff:fe00:66",
+     "value": {
+      "pref": 1,
+      "order": 5
+     },
+     "prev": null
+    },
+    {
+     "host": "08:00:27:00:00:20",
+     "kind": "dns6",
+     "key": null,
+     "value": "fe80::a00:27ff:fe00:66",
+     "prev": "fe80::a00:27ff:fe00:66"
+    }
+   ],
+   "blocked_by": [
+    "ra_guard"
+   ],
+   "rel_t": 45.483
+  }
+ ],
+ "rules": {
+  "ARP-01": {
+   "title": "ARP claim contradicts a trusted IPv4 binding",
+   "protocol": "ARP",
+   "mitre": "T1557.002",
+   "explain": "Frame {i} says {ip} is at {claimed}, but the sensor already knows {ip} belongs to {expected} (learned from {source}). ARP has no authentication, and RFC 826 tells every host that already has {ip} cached to overwrite it with the sender's MAC. That is how one forged reply redirects traffic.",
+   "field": "ARP sender hardware address (hwsrc)"
+  },
+  "ARP-02": {
+   "title": "One MAC address claims several IPv4 addresses",
+   "protocol": "ARP",
+   "mitre": "T1557.002",
+   "explain": "{claimed} has now claimed {count} different IPv4 addresses ({ips}). A normal client owns one address on a LAN. An attacker sitting in the middle claims the gateway and the victim at the same time.",
+   "field": "ARP sender protocol address (psrc)"
+  },
+  "ND-01": {
+   "title": "Neighbor Advertisement contradicts a trusted IPv6 binding",
+   "protocol": "NDP",
+   "mitre": "T1557",
+   "explain": "Frame {i} says {ip} is at {claimed}, but the sensor learned {ip} belongs to {expected} (from {source}). The Override flag is {override}. RFC 4861 tells a host to replace its cached link-layer address when O=1, which is the IPv6 version of ARP poisoning (RFC 3756, section 4.1.1).",
+   "field": "NA Target Link-Layer Address option"
+  },
+  "RA-01": {
+   "title": "Router Advertisement from an untrusted device",
+   "protocol": "RA",
+   "mitre": "T1557",
+   "explain": "{claimed} is announcing itself as an IPv6 router (lifetime {lifetime}s, preference {pref}). Only {expected} is the real router. Any host can send an RA and every host that hears it adds the sender to its default-router list (RFC 3756, section 4.2.1). With a higher preference it wins outright.",
+   "field": "Ethernet source / RA Source Link-Layer Address option"
+  },
+  "RA-02": {
+   "title": "Router Advertisement hands out an untrusted DNS server",
+   "protocol": "RA",
+   "mitre": "T1557",
+   "explain": "The RA in frame {i} carries an RDNSS option naming {dns} as the DNS server. Hosts that accept RDNSS (RFC 8106) will send name lookups there, so the attacker can answer with any address it likes.",
+   "field": "RA RDNSS option"
+  },
+  "DHCP-01": {
+   "title": "DHCPv4 server reply from an untrusted device",
+   "protocol": "DHCP",
+   "mitre": "T1557.003",
+   "explain": "{claimed} sent a DHCP {msg}. Only {expected} is the trusted DHCP server. Clients take the first offer they get, so a rogue server can set the victim's gateway and DNS server.",
+   "field": "Ethernet source / DHCP option 54 (server identifier)"
+  },
+  "DHCP-02": {
+   "title": "DHCPv4 lease points at an unexpected gateway or DNS server",
+   "protocol": "DHCP",
+   "mitre": "T1557.003",
+   "explain": "This lease tells {client} to use gateway {router} and DNS {dns}. Earlier leases on this network used gateway {base_router} and DNS {base_dns}.",
+   "field": "DHCP options 3 (router) and 6 (DNS)"
+  },
+  "D6-01": {
+   "title": "DHCPv6 server reply from an untrusted device",
+   "protocol": "DHCPv6",
+   "mitre": "T1557.003",
+   "explain": "{claimed} sent a DHCPv6 {msg} naming {dns} as the DNS server. Only {expected} is trusted to answer. DHCPv6 replies are not authenticated, so whoever answers a Solicit first can set the client's IPv6 DNS server.",
+   "field": "DHCPv6 option 23 (DNS recursive name server)"
+  },
+  "D6-02": {
+   "title": "DHCPv6 server on a network with no IPv6 router",
+   "protocol": "DHCPv6",
+   "mitre": "T1557.003",
+   "explain": "No legitimate Router Advertisement has been seen, so this network looks IPv4-only, yet a DHCPv6 server just answered. Windows asks for DHCPv6 by default and prefers IPv6 DNS, which is exactly the gap mitm6 abuses [6].",
+   "field": "DHCPv6 message type (advertise/reply)"
+  },
+  "XP-01": {
+   "title": "A host now trusts the attacker",
+   "protocol": "Cross-protocol",
+   "mitre": "T1557",
+   "explain": "After frame {i}, {host}'s {what} resolves to {actual} instead of the real router, {expected}. Its traffic for that role now goes through another machine.",
+   "field": "Host trust card"
+  }
+ },
+ "summary": {
+  "frames": 52,
+  "alerts": 22,
+  "frames_with_alerts": 11,
+  "by_rule": {
+   "ARP-01": 6,
+   "ARP-02": 1,
+   "XP-01": 8,
+   "ND-01": 1,
+   "RA-01": 2,
+   "RA-02": 2,
+   "D6-01": 2
+  },
+  "notes": []
+ }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "C1",
+  "title": "Challenge: something is wrong on this network",
+  "attack_type": "Rogue DHCPv4 server",
+  "attacker_mac": "08:00:27:00:00:66",
+  "affected_hosts": [
+    "08:00:27:00:00:30"
+  ],
+  "attack_frames": [
+    42,
+    44
+  ],
+  "frames": 53,
+  "duration_s": 57.0
+}

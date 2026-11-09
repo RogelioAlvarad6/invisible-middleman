@@ -1,0 +1,433 @@
+{
+  "version": 1,
+  "defenses": {
+    "static_arp": {
+      "label": "Static ARP entry (clients)",
+      "what": "Each client has a hand-typed, permanent ARP entry for the gateway, so ARP replies about 192.168.56.1 are ignored.",
+      "limit": "Only protects the gateway entry on the clients you configured. The router's entry for each client can still be poisoned, and it does nothing for IPv6 [1, Sec. 5.2.4], [11]."
+    },
+    "dai": {
+      "label": "DHCP snooping + Dynamic ARP Inspection",
+      "what": "The switch builds a table of which MAC got which IPv4 address from the trusted DHCP port, then drops ARP packets that disagree with it and DHCP server replies from untrusted ports.",
+      "limit": "IPv4 only. It never looks at ICMPv6 or DHCPv6, so it cannot see a rogue RA, a spoofed Neighbor Advertisement, or a rogue DHCPv6 server [5], [11]."
+    },
+    "ra_guard": {
+      "label": "RA-Guard",
+      "what": "The switch drops Router Advertisements that arrive on ports not marked as router ports (RFC 6105) [5].",
+      "limit": "Only filters RAs. It does not stop Neighbor Advertisement spoofing or DHCPv6, and simple implementations can be evaded by hiding the RA behind IPv6 extension headers (RFC 7113) [20]."
+    },
+    "dhcpv6_guard": {
+      "label": "DHCPv6 Guard",
+      "what": "The switch drops DHCPv6 Advertise and Reply messages that arrive on ports not marked as DHCPv6 server ports.",
+      "limit": "Only covers DHCPv6. A rogue RA with an RDNSS option can still hand out a malicious DNS server [13]."
+    }
+  },
+  "scenarios": [
+    {
+      "id": "S1",
+      "file": "S1_benign",
+      "title": "S1: A healthy dual-stack network",
+      "objective": 1,
+      "minutes": 10,
+      "intro": [
+        "This is what a normal home or dorm network looks like for two hours. Three computers get IPv4 addresses from DHCP, learn the router's MAC address with ARP, and set up IPv6 addresses on their own from the router's Router Advertisements. A phone joins halfway through.",
+        "Watch the trust cards on the right. Every card should stay green: each host's IPv4 gateway, IPv6 router and DNS servers all point at the real router (08:00:27:00:00:01). The kali VM is in this lab but does nothing suspicious in S1.",
+        "Nothing here is an attack, and the detector raises zero alerts. Several frames look like attacks to a naive monitor, though. The checkpoints ask why they are not."
+      ],
+      "steps": [
+        {
+          "frame": 5,
+          "title": "DHCP hands out the gateway and DNS server",
+          "text": "The DHCP ACK gives ubuntu-client its address (192.168.56.10), its default gateway (option 3) and its DNS server (option 6) [15], [18]. Nothing in this message is signed. The client simply believes whoever answers [1, Sec. 6.2.5].",
+          "question": {
+            "prompt": "After this frame, which IPv4 address will ubuntu-client send off-network traffic to?",
+            "options": ["192.168.56.1, from DHCP option 3", "192.168.56.10, its own address", "1.1.1.1", "It does not know yet until it sends an ARP request"],
+            "answer": 0,
+            "feedback": [
+              "Right. Option 3 (router) tells the client its default gateway's IP address.",
+              "That is the client's own address (yiaddr), not its gateway.",
+              "1.1.1.1 is a destination on the Internet. The client reaches it through the gateway.",
+              "Close, but ARP answers a different question. The client already knows the gateway's IP address from DHCP. ARP only finds the MAC address for that IP."
+            ]
+          }
+        },
+        {
+          "frame": 7,
+          "title": "ARP turns the gateway's IP into a MAC address",
+          "text": "Frame 6 is a broadcast question: 'Who has 192.168.56.1?'. Frame 7 is the router's unicast answer. ubuntu-client now caches 192.168.56.1 -> 08:00:27:00:00:01 [1, Sec. 6.1.4]. The sensor also writes this binding down; it becomes the 'truth' every later ARP claim is checked against.",
+          "question": {
+            "prompt": "What stops another machine from sending its own reply to frame 6?",
+            "options": ["Nothing. ARP replies carry no proof of who sent them", "The switch only forwards replies from the real router", "The reply must be signed with the router's key", "Only one reply is allowed per request"],
+            "answer": 0,
+            "feedback": [
+              "Correct. RFC 826 has no authentication at all, which is the property that makes ARP spoofable [2].",
+              "An ordinary switch forwards by MAC address and never checks ARP contents. Only Dynamic ARP Inspection does that.",
+              "ARP has no keys or signatures.",
+              "A host accepts any reply it gets, even several, and even replies to questions it never asked [2]."
+            ]
+          }
+        },
+        {
+          "frame": 23,
+          "title": "The router advertises itself for IPv6",
+          "text": "IPv6 has no DHCP-assigned gateway by default. Instead the router multicasts a Router Advertisement to every node (ff02::1). It carries the router's link-local address, its MAC (Source Link-Layer Address option), the prefix 2001:db8:56::/64 for addressing, a Router Lifetime, a Router Preference, and here an RDNSS option naming the DNS server [3], [12], [13].",
+          "question": {
+            "prompt": "Which field in this RA makes every host add the sender as a default router?",
+            "options": ["Router Lifetime greater than 0", "The prefix information option", "The hop limit of 255", "The destination address ff02::1"],
+            "answer": 0,
+            "feedback": [
+              "Right. RFC 4861 says a host adds the sender to its Default Router List whenever Router Lifetime is non-zero [3].",
+              "The prefix option is for building addresses (SLAAC), not for picking a router.",
+              "Hop limit 255 proves the packet came from the local link, not that the sender is a real router. Any host on the link can send with 255.",
+              "ff02::1 just means 'all nodes'. It decides who hears the RA, not what they do with it."
+            ]
+          }
+        },
+        {
+          "frame": 28,
+          "title": "Neighbor Discovery is IPv6's ARP",
+          "text": "ubuntu-client asks 'Who has fe80::a00:27ff:fe00:1?' with a Neighbor Solicitation (frame 27). The router answers with a Neighbor Advertisement whose flags are R (I am a router), S (this is a solicited answer) and O (override your cache) [3, Sec. 4.4]."
+        },
+        {
+          "frame": 165,
+          "title": "A new IPv6 address is not an attack",
+          "text": "One hour in, ubuntu-client creates a temporary IPv6 address (2001:db8:56:0:a1b2:...) for privacy, as RFC 8981 recommends [16]. A monitor that keys hosts by IP address would see a brand-new host. The engine keys hosts by MAC address, so it is the same machine and no alert fires.",
+          "question": {
+            "prompt": "Why does the detector stay quiet here?",
+            "options": ["The new address belongs to a MAC address it already knows", "Duplicate Address Detection messages are never checked", "Temporary addresses cannot be spoofed", "The frame arrived during a DHCP renewal"],
+            "answer": 0,
+            "feedback": [
+              "Correct. Tracking by MAC is how the engine avoids false positives from IPv6 address churn.",
+              "DAD messages are processed: the engine records the new address for that MAC. It simply is not a conflict.",
+              "Any IPv6 address can be claimed by anyone on the link. That is not why there is no alert.",
+              "The timing is a coincidence. A renewal does not suppress IPv6 alerts."
+            ]
+          }
+        },
+        {
+          "frame": 235,
+          "title": "A gratuitous ARP from a new device",
+          "text": "The phone just got 192.168.56.30 and announces it with a gratuitous ARP (sender IP = target IP). This is normal (RFC 5227 [17]). The claim matches the DHCP lease the sensor saw in frame 234, so it is consistent. Cross-checking ARP against DHCP is the core idea from ARProof [10]."
+        }
+      ],
+      "quiz": {
+        "title": "Fundamentals check (Objective 1)",
+        "pass": 0.8,
+        "questions": [
+          {
+            "prompt": "ARP maps which pair of values?",
+            "options": ["IPv4 address -> MAC address", "MAC address -> switch port", "Hostname -> IPv4 address", "IPv4 address -> IPv6 address"],
+            "answer": 0,
+            "feedback": ["Correct [1, Sec. 6.1.4].", "That is the switch's MAC address table, which ARP never touches.", "That is DNS.", "No protocol maps these directly on the LAN."]
+          },
+          {
+            "prompt": "Per RFC 826, a host that already has 192.168.56.1 in its ARP cache receives an ARP reply saying 192.168.56.1 is at a different MAC. What does it do?",
+            "options": ["Overwrites the entry with the new MAC", "Keeps the old entry because it came first", "Asks the router to confirm", "Drops the reply because it never sent a request"],
+            "answer": 0,
+            "feedback": ["Right. The 'merge' step in RFC 826 updates any existing entry for the sender [2]. This is the root of ARP poisoning.", "ARP has no 'first one wins' rule.", "ARP has no confirmation step.", "Most hosts accept unsolicited replies for entries they already have [2]."]
+          },
+          {
+            "prompt": "In IPv6, which message replaces ARP?",
+            "options": ["Neighbor Solicitation / Neighbor Advertisement", "Router Solicitation / Router Advertisement", "DHCPv6 Solicit / Advertise", "ICMPv6 Echo Request / Reply"],
+            "answer": 0,
+            "feedback": ["Correct. NS asks for a link-layer address; NA answers it [3].", "RS/RA find routers and prefixes, not a neighbor's MAC.", "DHCPv6 assigns addresses and DNS, not MAC mappings.", "Echo is ping."]
+          },
+          {
+            "prompt": "Where does an IPv6 host on this network learn its default router?",
+            "options": ["From Router Advertisements", "From DHCPv6 option 23", "From DHCPv4 option 3", "From the first NA it receives"],
+            "answer": 0,
+            "feedback": ["Right. DHCPv6 has no default-router option; RAs are the only source [3], [14].", "Option 23 is the DNS server list.", "That is the IPv4 gateway. IPv6 ignores it.", "NAs map addresses to MACs; they do not make a router."]
+          },
+          {
+            "prompt": "What protocol property makes ARP and Neighbor Discovery 'spoofable'?",
+            "options": ["Hosts accept answers without any authentication of the sender", "They use broadcast or multicast", "They run below the IP layer", "They are not encrypted"],
+            "answer": 0,
+            "feedback": ["Correct. This is the authentication-based weakness in the textbook's taxonomy [1, Sec. 5.2.4], [4].", "Broadcast lets an attacker see the questions, but the real flaw is that answers are trusted without proof.", "Being low in the stack is not the problem; lack of authentication is.", "Encryption hides content. The problem is that nobody verifies who is answering."]
+          }
+        ]
+      }
+    },
+    {
+      "id": "S2",
+      "file": "S2_arp_poisoning",
+      "title": "S2: IPv4 ARP cache poisoning",
+      "objective": 2,
+      "minutes": 10,
+      "intro": [
+        "This is the attack from the course lab, seen from the defender's side. kali sends forged ARP replies to two machines: it tells ubuntu-client that the gateway (192.168.56.1) is at kali's MAC, and it tells the router that ubuntu-client (192.168.56.10) is at kali's MAC. Both directions of traffic now flow through kali, which forwards them so nothing appears broken [1, Sec. 5.2.4, Fig. 5.10].",
+        "Your job: find the exact frame that changes ubuntu-client's gateway, and the field that caused it."
+      ],
+      "steps": [
+        {
+          "frame": 37,
+          "title": "Reconnaissance",
+          "text": "kali first asks for ubuntu-client's MAC like any normal host. An attacker needs the victim's real MAC address to keep forwarding its traffic after poisoning it."
+        },
+        {
+          "frame": 39,
+          "title": "The poisoning frame",
+          "text": "Watch ubuntu-client's trust card turn red. This frame is an ARP reply nobody asked for.",
+          "question": {
+            "prompt": "Which ARP field in frame 39 made ubuntu-client's gateway entry change?",
+            "options": ["Sender hardware address (hwsrc) = 08:00:27:00:00:66", "Target protocol address (pdst) = 192.168.56.10", "Operation = 2 (reply)", "Ethernet destination = ubuntu-client's MAC"],
+            "answer": 0,
+            "feedback": [
+              "Correct. The reply pairs sender IP 192.168.56.1 with sender MAC 08:00:27:00:00:66, and RFC 826 tells the victim to cache exactly that pair [2].",
+              "pdst only says who the reply is for. It explains why ubuntu-client processes it, not what gets written to the cache.",
+              "The opcode makes it a reply, but a reply with the router's real MAC would be harmless. The poison is in the sender MAC.",
+              "The Ethernet header delivers the frame to the victim; ARP caches are updated from the ARP sender fields."
+            ]
+          }
+        },
+        {
+          "frame": 40,
+          "title": "The other direction",
+          "text": "Now the router is told that 192.168.56.10 lives at kali's MAC. Without this second lie, kali would see only the victim's outbound traffic, not the replies [1, Sec. 5.2.4].",
+          "question": {
+            "prompt": "Turn on 'Static ARP entry (clients)'. Is frame 40 still effective?",
+            "options": ["Yes. The static entry is on the client, and this frame poisons the router", "No. Static ARP blocks every forged reply", "No. Static ARP makes the router ignore ARP", "Only for IPv6 traffic"],
+            "answer": 0,
+            "feedback": [
+              "Right. A static gateway entry only protects the gateway mapping on that client. The return path through the router is still poisoned [11].",
+              "Static entries are per host and per address. They only protect what was configured.",
+              "The toggle models static entries on the clients only, which is the common home setup.",
+              "This scenario is IPv4-only; static ARP has no IPv6 effect at all."
+            ]
+          }
+        },
+        {
+          "frame": 45,
+          "title": "Traffic now goes through kali",
+          "text": "ubuntu-client pings 1.1.1.1. The IP header is unchanged, but the Ethernet destination is kali's MAC (frame 45). In frame 46 kali forwards the same packet to the real router. From the user's point of view everything still works.",
+          "question": {
+            "prompt": "In frame 45, what tells you the traffic was redirected?",
+            "options": ["The destination MAC is kali's, but the destination IP is 1.1.1.1", "The destination IP is kali's address", "The TTL is lower than usual", "The packet is a broadcast"],
+            "answer": 0,
+            "feedback": [
+              "Correct. An off-network IP address should always go to the gateway's MAC. Here that 'gateway MAC' is kali.",
+              "The IP header is untouched. That is why this attack is invisible above layer 2.",
+              "TTL drops when kali forwards (frame 46), not in the victim's original packet.",
+              "It is a unicast frame addressed to kali's MAC."
+            ]
+          }
+        },
+        {
+          "frame": 48,
+          "title": "Why the attacker keeps repeating",
+          "text": "kali re-sends both lies every 2 seconds. ARP cache entries time out and the real router may answer a fresh request [1, Sec. 6.1.4], so the attacker refreshes the poison. Every repeat contradicts the binding the sensor learned from DHCP, so each one raises ARP-01, and ARP-02 notes one MAC claiming three addresses."
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "file": "S3_rogue_ra",
+      "title": "S3: A rogue IPv6 router",
+      "objective": 2,
+      "minutes": 10,
+      "intro": [
+        "Same network, but now kali attacks IPv6. It sends Router Advertisements announcing itself as a high-preference router and a DNS server. Nothing on the IPv4 side changes, so tools that only watch ARP see nothing at all [4, Sec. 4.2.1], [6].",
+        "Find the frame that changes the hosts' IPv6 default router, and the RA field that makes kali win over the real router."
+      ],
+      "steps": [
+        {
+          "frame": 23,
+          "title": "The real router's RA",
+          "text": "Baseline: the real router advertises with Router Preference 'medium' (the default) and RDNSS pointing at itself."
+        },
+        {
+          "frame": 37,
+          "title": "The rogue RA",
+          "text": "kali's RA arrives. Both clients' IPv6 router and IPv6 DNS rows turn red at once.",
+          "question": {
+            "prompt": "Both RAs have a non-zero lifetime, so both routers end up in each host's Default Router List. Which field makes the hosts pick kali?",
+            "options": ["Router Preference = high", "Router Lifetime = 1800", "Source Link-Layer Address", "The RDNSS option"],
+            "answer": 0,
+            "feedback": [
+              "Correct. RFC 4191 tells hosts to prefer the router with the higher preference [12]. kali says 'high', the real router says 'medium'.",
+              "The real router also advertises 1800 seconds. Lifetime only decides whether a router is on the list.",
+              "The SLLAO tells hosts kali's MAC, so traffic for kali reaches kali, but it does not rank routers.",
+              "RDNSS changes the DNS server, not the default router."
+            ]
+          }
+        },
+        {
+          "frame": 38,
+          "title": "DNS lookups go to the attacker",
+          "text": "win11-client sends its AAAA lookup for outlook.office.com to kali's link-local address, because the RDNSS option (RFC 8106 [13]) told it to. kali can now answer with any address it wants."
+        },
+        {
+          "frame": 43,
+          "title": "The real router speaks again",
+          "text": "The legitimate RA does not fix the default router: kali's 'high' still beats 'medium'. It does briefly change the IPv6 DNS row back, because hosts use the most recent RDNSS they heard. Step to frame 45 and watch kali take DNS back.",
+          "question": {
+            "prompt": "Turn on RA-Guard and step through again. What happens to the trust cards?",
+            "options": ["They stay green; kali's RAs never reach the hosts", "They still turn red, but later", "Only the DNS row stays green", "Nothing changes, RA-Guard only works for IPv4"],
+            "answer": 0,
+            "feedback": [
+              "Right. RA-Guard drops RAs from non-router ports at the switch [5].",
+              "Blocked frames are dropped entirely, so they never take effect.",
+              "Both the router and DNS come from the same RA, so blocking it fixes both.",
+              "RA-Guard is an IPv6 feature defined in RFC 6105 [5]."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "file": "S4_rogue_dhcpv6",
+      "title": "S4: A rogue DHCPv6 server on an 'IPv4-only' network",
+      "objective": 2,
+      "minutes": 10,
+      "intro": [
+        "This network has no IPv6 router at all. The owner thinks it is IPv4-only. But Windows enables IPv6 by default and asks for DHCPv6 anyway. kali answers and makes itself win11-client's IPv6 DNS server. This is the mitm6 technique that Fox-IT published [6].",
+        "Find the frame that changes win11-client's DNS server, and the DHCPv6 option that carries it."
+      ],
+      "steps": [
+        {
+          "frame": 26,
+          "title": "Windows asks for DHCPv6",
+          "text": "win11-client multicasts a DHCPv6 Solicit to ff02::1:2 (all DHCP servers) even though no RA ever told it to [14]. Any machine on the link can answer.",
+          "question": {
+            "prompt": "Why can't an IPv4 defense like Dynamic ARP Inspection stop what happens next?",
+            "options": ["DHCPv6 is carried over IPv6/UDP, which DAI never inspects", "DAI only works on wireless networks", "kali uses an IPv4 address DAI trusts", "DAI blocks it, but only after 5 minutes"],
+            "answer": 0,
+            "feedback": [
+              "Correct. DAI and DHCP snooping look at ARP and DHCPv4. This is the dual-stack gap [5], [6].",
+              "DAI is a wired switch feature.",
+              "kali never uses IPv4 in this attack.",
+              "DAI has no IPv6 support at all."
+            ]
+          }
+        },
+        {
+          "frame": 29,
+          "title": "The rogue Reply",
+          "text": "kali's DHCPv6 Reply completes the exchange. win11-client's IPv6 DNS row turns red.",
+          "question": {
+            "prompt": "Which DHCPv6 option made win11-client use kali for DNS?",
+            "options": ["Option 23, DNS Recursive Name Server", "Option 3, IA_NA (address)", "Option 2, Server Identifier", "Option 1, Client Identifier"],
+            "answer": 0,
+            "feedback": [
+              "Right. Option 23 lists DNS servers, and kali put its own link-local address there [14].",
+              "IA_NA gives the client an IPv6 address. That address is a side effect; the DNS option is the attack.",
+              "The Server Identifier names kali's DUID, which is how the engine sees the server is not the router.",
+              "That identifies the client, not the DNS server."
+            ]
+          }
+        },
+        {
+          "frame": 32,
+          "title": "Name resolution is taken over",
+          "text": "Windows resolves kali's link-local address with a normal NS/NA (frames 30-31). It prefers IPv6 DNS, so its next lookup (wpad.corp.local) goes to kali over IPv6 while IPv4 still looks perfectly normal. With WPAD, the attacker can then become the victim's web proxy [6]. Alert D6-02 explains why this is suspicious even without a known router: DHCPv6 answered on a network with no IPv6 router."
+        },
+        {
+          "frame": 37,
+          "title": "Short leases keep it going",
+          "text": "mitm6 hands out short leases so it can re-assert itself often, which is why the exchange repeats. Each server reply raises D6-01 because its source MAC is not the trusted router [8]."
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "file": "S5_dual_stack_gap",
+      "title": "S5: IPv4 defended, IPv6 wide open",
+      "objective": 4,
+      "minutes": 15,
+      "defaults": ["static_arp", "dai"],
+      "intro": [
+        "This network did IPv4 security right: clients have static gateway entries and the switch runs DHCP snooping with Dynamic ARP Inspection. Those two toggles start ON. kali's ARP poisoning fails, so it switches to IPv6: a spoofed Neighbor Advertisement, a rogue RA, and a rogue DHCPv6 server.",
+        "Use the defense toggles to find out which combination finally keeps every trust card green, and which attack none of these four defenses stops."
+      ],
+      "steps": [
+        {
+          "frame": 37,
+          "title": "IPv4 attempt: blocked",
+          "text": "The forged ARP reply is marked 'blocked by DAI'. The switch dropped it because it contradicts the DHCP snooping table. Turn DAI off and step here again to see what would have happened."
+        },
+        {
+          "frame": 44,
+          "title": "The spoofed Neighbor Advertisement",
+          "text": "kali multicasts an NA claiming the router's link-local address is at kali's MAC, with the Override flag set. This is RFC 3756 section 4.1.1, the IPv6 version of ARP poisoning [4].",
+          "question": {
+            "prompt": "Which of the four defenses blocks this frame?",
+            "options": ["None of them", "Dynamic ARP Inspection", "RA-Guard", "DHCPv6 Guard"],
+            "answer": 0,
+            "feedback": [
+              "Correct. None of these looks at Neighbor Advertisements. Stopping it needs IPv6 ND inspection / source guard on the switch, or SEcure Neighbor Discovery (RFC 3971) [19].",
+              "DAI only inspects ARP.",
+              "RA-Guard only filters Router Advertisements; this is an NA.",
+              "DHCPv6 Guard only filters DHCPv6 server messages."
+            ]
+          }
+        },
+        {
+          "frame": 45,
+          "title": "The rogue RA",
+          "text": "kali also advertises itself as a high-preference router with an RDNSS option. Turn on RA-Guard and DHCPv6 Guard and step through again. The IPv6 rows still end up red, because of frame 44."
+        },
+        {
+          "frame": 49,
+          "title": "The rogue DHCPv6 Reply",
+          "text": "With RA-Guard on but DHCPv6 Guard off, this Reply is a second way kali becomes win11-client's DNS server. DHCPv6 Guard drops it."
+        }
+      ],
+      "quiz": {
+        "title": "Mitigation quiz (Objective 4)",
+        "pass": 0.8,
+        "questions": [
+          {
+            "prompt": "With only static ARP + DAI enabled, which of kali's attacks succeed?",
+            "options": ["The NA spoof, the rogue RA and the rogue DHCPv6 server", "Only the ARP poisoning", "None of them", "Only the rogue DHCPv6 server"],
+            "answer": 0,
+            "feedback": ["Correct. Every IPv6 attack gets through IPv4-only defenses.", "The ARP poisoning is the one attack that was stopped.", "Step through with only those two toggles on: the IPv6 rows turn red.", "The RA and NA spoof also succeed."]
+          },
+          {
+            "prompt": "Why does a network you believe is 'IPv4-only' still need IPv6 protections?",
+            "options": ["Operating systems enable IPv6 by default and prefer it when it is offered", "IPv4 traffic is tunneled over IPv6 on all switches", "DAI turns itself off when IPv6 is present", "Routers always send RAs"],
+            "answer": 0,
+            "feedback": ["Right. Hosts will accept IPv6 configuration from anyone, as S4 showed [6].", "No such tunneling happens on the LAN.", "DAI keeps working; it just cannot see IPv6.", "In S4 the router sent no RAs at all, and the attack still worked."]
+          },
+          {
+            "prompt": "You enable RA-Guard and DHCPv6 Guard. Why can the IPv6 rows still be red?",
+            "options": ["The spoofed NA maps the real router's link-local address to kali's MAC, so packets to the router (and to it as DNS server) reach kali", "RA-Guard turns DAI off", "RA-Guard lets the RDNSS option through", "They can't: those two guards stop every IPv6 attack"],
+            "answer": 0,
+            "feedback": ["Correct. The host still trusts the real router's IP address, but its neighbor cache resolves that address to kali [4].", "The toggles are independent, and the IPv4 rows stay green.", "RA-Guard drops the whole RA, RDNSS included. The DNS row is red for the same reason as the router row.", "Frame 44 is not an RA or a DHCPv6 message."]
+          },
+          {
+            "prompt": "A static ARP entry for the gateway is configured on ubuntu-client only. What part of S2's attack still works?",
+            "options": ["Poisoning the router's entry for ubuntu-client (the return path)", "Nothing", "Poisoning ubuntu-client's gateway entry", "The IPv6 rogue RA"],
+            "answer": 0,
+            "feedback": ["Right. Static entries protect one mapping on one host [11].", "The router's cache is still unprotected.", "That is the one mapping the static entry protects.", "S2 has no RA attack."]
+          },
+          {
+            "prompt": "RFC 7113 points out a weakness in simple RA-Guard implementations. What is it?",
+            "options": ["Attackers can hide the RA behind IPv6 extension headers or fragments", "RA-Guard blocks the real router too", "RA-Guard only works on wireless", "RA-Guard needs a certificate on every host"],
+            "answer": 0,
+            "feedback": ["Correct. A switch that does not parse the full header chain may not recognize the packet as an RA [20].", "Router ports are configured as trusted.", "RA-Guard is a switch feature for wired ports.", "That describes SEND (RFC 3971), not RA-Guard."]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C1",
+      "file": "C1_challenge",
+      "title": "Challenge: something is wrong on this network",
+      "objective": 3,
+      "minutes": 30,
+      "challenge": true,
+      "intro": [
+        "Host names are hidden and the detector's alerts are turned off. Somewhere in this capture, one machine attacks another. Use the frame list, the trust cards and what you learned in S1-S5 to answer the three questions below. The clock starts when you open the scenario.",
+        "Tip: start by finding the moment a trust card turns red, then work backward to the frame that caused it."
+      ],
+      "steps": [],
+      "answers": {
+        "attack_type": 3,
+        "attacker_mac": "08:00:27:00:00:66",
+        "affected": ["08:00:27:00:00:30"]
+      },
+      "attack_options": ["ARP cache poisoning", "Rogue IPv6 Router Advertisement", "Rogue DHCPv6 server", "Rogue DHCPv4 server", "Neighbor Advertisement spoofing"],
+      "debrief": "A new device (the phone, 08:00:27:00:00:30) joined at frame 41. kali (08:00:27:00:00:66) answered its DHCP Discover first (frame 42) and the phone accepted kali's lease (frame 44), which set its gateway and DNS server to 192.168.56.66. The real router's offer (frame 45) arrived too late. The phone's DNS lookup in frame 48 goes straight to kali. DHCP snooping, which is part of the DAI toggle, would have dropped frames 42 and 44 [1, Sec. 6.2.5], [8]."
+    }
+  ]
+}
